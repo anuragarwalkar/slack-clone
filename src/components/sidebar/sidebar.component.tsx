@@ -10,11 +10,16 @@ import FileCopyIcon from "@mui/icons-material/FileCopy";
 import InboxIcon from "@mui/icons-material/Inbox";
 import InsertCommentIcon from "@mui/icons-material/InsertComment";
 import PeopleAltIcon from "@mui/icons-material/PeopleAlt";
+import { collection } from "firebase/firestore";
 import React from "react";
+import { useCollection } from "react-firebase-hooks/firestore";
 import styled from "styled-components";
+import db from "../../firebase-init";
 import SidebarOption from "./sidebar-option.component";
 
 function SidebarComponent() {
+  const [channels, loading, error] = useCollection(collection(db, "rooms"));
+
   return (
     <SidebarContainer>
       <SidebarHeader>
@@ -39,6 +44,11 @@ function SidebarComponent() {
       <SidebarOption Icon={ExpandMoreIcon} title="Channels" />
       <hr />
       <SidebarOption Icon={AddIcon} addChannelOption title="Add channel" />
+
+      {channels?.docs.map((doc) => {
+        const { name } = doc.data();
+        return <SidebarOption id={doc.id} key={doc.id} title={name} />;
+      })}
     </SidebarContainer>
   );
 }

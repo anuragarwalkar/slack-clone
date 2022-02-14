@@ -1,13 +1,9 @@
-import { Fragment } from "react";
 import { BrowserRouter, Route, Routes } from "react-router-dom";
 import styled from "styled-components";
 import "./app.styles.scss";
+import ChatComponent from "./components/chat/chat.component";
 import HeaderComponent from "./components/header/header.component";
 import SidebarComponent from "./components/sidebar/sidebar.component";
-
-const HomePage = () => {
-  return <Fragment></Fragment>;
-};
 
 function App() {
   return (
@@ -17,7 +13,7 @@ function App() {
         <AppBody>
           <SidebarComponent />
           <Routes>
-            <Route path="/" element={<HomePage />} />
+            <Route path="/" element={<ChatComponent />} />
           </Routes>
         </AppBody>
       </div>

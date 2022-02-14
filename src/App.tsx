@@ -1,8 +1,8 @@
-import React, { Fragment } from "react";
-import "./app.styles.scss";
+import { Fragment } from "react";
 import { BrowserRouter, Route, Routes } from "react-router-dom";
-import HeaderComponent from "./components/header/header.component";
 import styled from "styled-components";
+import "./app.styles.scss";
+import HeaderComponent from "./components/header/header.component";
 import SidebarComponent from "./components/sidebar/sidebar.component";
 
 const HomePage = () => {

@@ -1,17 +1,18 @@
-import React from "react";
-import styled from "styled-components";
-import FiberManualRecordIcon from "@mui/icons-material/FiberManualRecord";
-import CreateIcon from "@mui/icons-material/Create";
-import SidebarOption from "./sidebar-option.component";
-import InsertCommentIcon from "@mui/icons-material/InsertComment";
-import InboxIcon from "@mui/icons-material/Inbox";
-import DraftsIcon from "@mui/icons-material/Drafts";
-import BookmarkIcon from "@mui/icons-material/Bookmark";
-import PeopleAltIcon from "@mui/icons-material/PeopleAlt";
+import AddIcon from "@mui/icons-material/Add";
 import AppsIcon from "@mui/icons-material/Apps";
-import FileCopyIcon from "@mui/icons-material/FileCopy";
+import BookmarkIcon from "@mui/icons-material/Bookmark";
+import CreateIcon from "@mui/icons-material/Create";
+import DraftsIcon from "@mui/icons-material/Drafts";
 import ExpandLessIcon from "@mui/icons-material/ExpandLess";
 import ExpandMoreIcon from "@mui/icons-material/ExpandMore";
+import FiberManualRecordIcon from "@mui/icons-material/FiberManualRecord";
+import FileCopyIcon from "@mui/icons-material/FileCopy";
+import InboxIcon from "@mui/icons-material/Inbox";
+import InsertCommentIcon from "@mui/icons-material/InsertComment";
+import PeopleAltIcon from "@mui/icons-material/PeopleAlt";
+import React from "react";
+import styled from "styled-components";
+import SidebarOption from "./sidebar-option.component";
 
 function SidebarComponent() {
   return (
@@ -36,6 +37,8 @@ function SidebarComponent() {
       <SidebarOption Icon={ExpandLessIcon} title="Show less" />
       <hr />
       <SidebarOption Icon={ExpandMoreIcon} title="Channels" />
+      <hr />
+      <SidebarOption Icon={AddIcon} addChannelOption title="Add channel" />
     </SidebarContainer>
   );
 }
@@ -50,6 +53,12 @@ const SidebarContainer = styled.div`
   border-top: 1px solid #49274b;
   max-width: 260px;
   margin-top: 60px;
+
+  > hr {
+    margin-top: 10px;
+    margin-bottom: 10px;
+    border: 1px solid #49274b;
+  }
 `;
 
 const SidebarHeader = styled.div`

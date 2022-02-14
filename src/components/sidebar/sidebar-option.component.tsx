@@ -1,9 +1,31 @@
-import React from "react";
+import { addDoc, collection } from "firebase/firestore";
+import { ComponentType } from "react";
 import styled from "styled-components";
+import db from "../../firebase-init";
 
-function SidebarOption({ Icon, title }: any) {
+type AppProps = {
+  addChannelOption?: boolean;
+  title: string;
+  Icon: ComponentType<any>;
+};
+
+function SidebarOption({ Icon, addChannelOption, title }: AppProps) {
+  const addChannel = async () => {
+    const channelName = prompt("Please enter the channel name");
+
+    if (channelName) {
+      await addDoc(collection(db, "rooms"), {
+        name: channelName,
+      });
+    }
+  };
+
+  const selectChannel = () => {};
+
   return (
-    <SidebarOptionContainer>
+    <SidebarOptionContainer
+      onClick={addChannelOption ? addChannel : selectChannel}
+    >
       {Icon && <Icon fontSize="small" style={{ padding: 10 }} />}
       {Icon ? (
         <h3>{title}</h3>

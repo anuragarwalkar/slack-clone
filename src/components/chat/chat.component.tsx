@@ -1,6 +1,7 @@
 import InfoOutlinedIcon from "@mui/icons-material/InfoOutlined";
 import StarBorderIcon from "@mui/icons-material/StarBorder";
 import { collection, doc } from "firebase/firestore";
+import { Fragment, useEffect, useRef } from "react";
 import { useCollection, useDocument } from "react-firebase-hooks/firestore";
 import styled from "styled-components";
 import { useAppSelector } from "../../app/hooks";
@@ -13,39 +14,51 @@ type Props = {};
 
 const ChatComponent = (props: Props) => {
   const roomId = useAppSelector(selectRoomId);
+  const chatRef = useRef(null);
 
-  const [roomMessages] = useCollection(
+  const [roomMessages, loading] = useCollection(
     roomId && collection(doc(db, "rooms", roomId), "messages")
   );
+
+  useEffect(() => {
+    (chatRef?.current as any)?.scrollIntoView();
+  }, [roomId, loading]);
 
   const [roomDetails] = useDocument(roomId && doc(db, "rooms", roomId));
 
   return (
     <ChatContainer>
-      <Header>
-        <HeaderLeft>
-          <h4>
-            <strong>#{roomDetails?.data()?.name}</strong>
-          </h4>
-          <StarBorderIcon />
-        </HeaderLeft>
+      {roomDetails && roomMessages && (
+        <Fragment>
+          <Header>
+            <HeaderLeft>
+              <h4>
+                <strong>#{roomDetails?.data()?.name}</strong>
+              </h4>
+              <StarBorderIcon />
+            </HeaderLeft>
 
-        <HeaderRight>
-          <p>
-            <InfoOutlinedIcon /> Details
-          </p>
-        </HeaderRight>
-      </Header>
+            <HeaderRight>
+              <p>
+                <InfoOutlinedIcon /> Details
+              </p>
+            </HeaderRight>
+          </Header>
 
-      <ChatMessages>
-        {roomMessages?.docs?.map((doc) => {
-          const rest = doc.data();
-          console.log("rest:", rest);
-          return <MessageComponent key={doc.id} {...rest} />;
-        })}
-        <ChatBottom />
-      </ChatMessages>
-      <ChatInput channelName="ad" channelId={roomId} />
+          <ChatMessages>
+            {roomMessages?.docs?.map((doc) => {
+              const rest = doc.data();
+              return <MessageComponent key={doc.id} {...rest} />;
+            })}
+            <ChatBottom />
+          </ChatMessages>
+          <ChatInput
+            ref={chatRef}
+            channelName={roomDetails?.data()?.name}
+            channelId={roomId}
+          />
+        </Fragment>
+      )}
     </ChatContainer>
   );
 };

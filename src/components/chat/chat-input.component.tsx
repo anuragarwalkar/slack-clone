@@ -1,16 +1,19 @@
 import Button from "@mui/material/Button";
 import { addDoc, collection, doc, serverTimestamp } from "firebase/firestore";
 import { useState } from "react";
+import { useAuthState } from "react-firebase-hooks/auth";
 import styled from "styled-components";
-import db from "../../firebase-init";
+import db, { auth } from "../../firebase-init";
 
 type Props = {
   channelId: string;
   channelName: string;
+  ref: any;
 };
 
 const ChatInput = ({ channelId, channelName }: Props) => {
   const [currentInput, setCurrentInput] = useState("");
+  const [user] = useAuthState(auth);
 
   const onChangeInput = (e: any) => {
     setCurrentInput(e.target.value);
@@ -27,9 +30,8 @@ const ChatInput = ({ channelId, channelName }: Props) => {
     await addDoc(collection(docRef, "messages"), {
       message: currentInput,
       timestamp: serverTimestamp(),
-      user: "Anurag Arwalkar",
-      userImage:
-        "https://upload.wikimedia.org/wikipedia/commons/9/99/Sample_User_Icon.png",
+      user: user?.displayName,
+      userImage: user?.photoURL,
     });
 
     setCurrentInput("");

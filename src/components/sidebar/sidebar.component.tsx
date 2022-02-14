@@ -12,22 +12,24 @@ import InsertCommentIcon from "@mui/icons-material/InsertComment";
 import PeopleAltIcon from "@mui/icons-material/PeopleAlt";
 import { collection } from "firebase/firestore";
 import React from "react";
+import { useAuthState } from "react-firebase-hooks/auth";
 import { useCollection } from "react-firebase-hooks/firestore";
 import styled from "styled-components";
-import db from "../../firebase-init";
+import db, { auth } from "../../firebase-init";
 import SidebarOption from "./sidebar-option.component";
 
 function SidebarComponent() {
+  const [user] = useAuthState(auth);
   const [channels, loading, error] = useCollection(collection(db, "rooms"));
 
   return (
     <SidebarContainer>
       <SidebarHeader>
         <SidebarInfo>
-          <h2>Anurag Fan</h2>
+          <h2>Apple INC</h2>
           <h3>
             <FiberManualRecordIcon />
-            Anurag Arwalkar
+            {user?.displayName}
           </h3>
         </SidebarInfo>
         <CreateIcon />

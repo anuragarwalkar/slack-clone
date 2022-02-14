@@ -1,15 +1,18 @@
-import React from "react";
-import styled from "styled-components";
-import Avatar from "@mui/material/Avatar";
 import AccessTimeIcon from "@mui/icons-material/AccessTime";
-import SearchIcon from "@mui/icons-material/Search";
 import HelpOutlineOutlinedIcon from "@mui/icons-material/HelpOutlineOutlined";
+import SearchIcon from "@mui/icons-material/Search";
+import Avatar from "@mui/material/Avatar";
+import React from "react";
+import { useAuthState } from "react-firebase-hooks/auth";
+import styled from "styled-components";
+import { auth } from "../../firebase-init";
 
 function HeaderComponent() {
+  const [user] = useAuthState(auth);
   return (
     <HeaderContainer>
       <HeaderLeft>
-        <HeaderAvatar />
+        <HeaderAvatar src={user?.photoURL} alt={user?.displayName} />
         <AccessTimeIcon />
       </HeaderLeft>
 
@@ -79,7 +82,7 @@ const HeaderRight = styled.div`
   }
 `;
 
-const HeaderAvatar = styled(Avatar)`
+const HeaderAvatar: any = styled(Avatar)`
   cursor: pointer;
 
   :hover {

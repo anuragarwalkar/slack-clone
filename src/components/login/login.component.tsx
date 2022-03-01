@@ -1,6 +1,5 @@
 import Button from "@mui/material/Button";
 import { signInWithPopup } from "firebase/auth";
-import React from "react";
 import styled from "styled-components";
 import { auth, provider } from "../../firebase-init";
 

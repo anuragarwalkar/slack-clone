@@ -3,7 +3,7 @@ import { signInWithPopup } from "firebase/auth";
 import styled from "styled-components";
 import { auth, provider } from "../../firebase-init";
 
-type Props = {};
+interface Props {}
 
 const LoginComponent = (props: Props) => {
   const onLogin = (e: any) => {

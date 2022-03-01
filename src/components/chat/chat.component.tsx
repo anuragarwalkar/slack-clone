@@ -1,6 +1,6 @@
 import InfoOutlinedIcon from "@mui/icons-material/InfoOutlined";
 import StarBorderIcon from "@mui/icons-material/StarBorder";
-import { collection, doc } from "firebase/firestore";
+import { collection, doc, orderBy, query } from "firebase/firestore";
 import { Fragment, useEffect, useRef } from "react";
 import { useCollection, useDocument } from "react-firebase-hooks/firestore";
 import styled from "styled-components";
@@ -10,14 +10,18 @@ import db from "../../firebase-init";
 import MessageComponent from "../message/message.component";
 import ChatInput from "./chat-input.component";
 
-type Props = {};
+interface Props {}
 
 const ChatComponent = (props: Props) => {
   const roomId = useAppSelector(selectRoomId);
   const chatRef = useRef(null);
 
   const [roomMessages, loading] = useCollection(
-    roomId && collection(doc(db, "rooms", roomId), "messages")
+    roomId &&
+      query(
+        collection(doc(db, "rooms", roomId), "messages"),
+        orderBy("timestamp", "asc")
+      )
   );
 
   useEffect(() => {

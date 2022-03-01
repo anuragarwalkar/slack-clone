@@ -10,7 +10,7 @@ import SidebarComponent from "./components/sidebar/sidebar.component";
 import { auth } from "./firebase-init";
 
 function App() {
-  const [user, loading] = useAuthState(auth);
+  const [user] = useAuthState(auth);
 
   return (
     <BrowserRouter>

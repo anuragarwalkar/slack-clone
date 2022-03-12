@@ -17,20 +17,19 @@ const ChatComponent = (props: Props) => {
   const chatRef = useRef(null);
 
   const [roomMessages, loading] = useCollection(
-    (roomId as any) &&
-      query(
-        collection(doc(db, "rooms", roomId), "messages"),
-        orderBy("timestamp", "asc")
-      )
+    roomId
+      ? query(
+          collection(doc(db, "rooms", roomId), "messages"),
+          orderBy("timestamp", "asc")
+        )
+      : null
   );
 
   useEffect(() => {
     (chatRef?.current as any)?.scrollIntoView();
   }, [roomId, loading]);
 
-  const [roomDetails] = useDocument(
-    (roomId as any) && doc(db, "rooms", roomId)
-  );
+  const [roomDetails] = useDocument(roomId ? doc(db, "rooms", roomId) : null);
 
   return (
     <ChatContainer>

@@ -8,10 +8,10 @@ import db, { auth } from "../../firebase-init";
 type Props = {
   channelId: string;
   channelName: string;
-  ref: any;
+  innerRef: any;
 };
 
-const ChatInput = ({ channelId, channelName }: Props) => {
+const ChatInput = ({ innerRef, channelId, channelName }: Props) => {
   const [currentInput, setCurrentInput] = useState("");
   const [user] = useAuthState(auth);
 
@@ -38,7 +38,7 @@ const ChatInput = ({ channelId, channelName }: Props) => {
   };
 
   return (
-    <ChatInputContainer>
+    <ChatInputContainer ref={innerRef}>
       <form>
         <input
           type="text"

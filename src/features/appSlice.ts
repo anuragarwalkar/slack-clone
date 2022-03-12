@@ -1,7 +1,12 @@
 import { createSlice } from "@reduxjs/toolkit";
+import { RootState } from "../app/store";
 
-const initialState: any = {
-  roomId: null,
+interface AppSliceState {
+  roomId: string 
+}
+
+const initialState:  AppSliceState= {
+  roomId: '',
 };
 
 export const appSlice = createSlice({
@@ -12,12 +17,11 @@ export const appSlice = createSlice({
       state.roomId = action.payload.roomId;
       return state;
     },
-  },
-  extraReducers: (builder) => {},
+  }
 });
 
 export const { enterRoom } = appSlice.actions;
 
-export const selectRoomId = (state: any) => state.app.roomId;
+export const selectRoomId = (state: RootState) => state.app.roomId;
 
 export default appSlice.reducer;

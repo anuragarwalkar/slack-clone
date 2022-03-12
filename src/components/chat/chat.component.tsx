@@ -17,7 +17,7 @@ const ChatComponent = (props: Props) => {
   const chatRef = useRef(null);
 
   const [roomMessages, loading] = useCollection(
-    roomId &&
+    (roomId as any) &&
       query(
         collection(doc(db, "rooms", roomId), "messages"),
         orderBy("timestamp", "asc")
@@ -28,7 +28,9 @@ const ChatComponent = (props: Props) => {
     (chatRef?.current as any)?.scrollIntoView();
   }, [roomId, loading]);
 
-  const [roomDetails] = useDocument(roomId && doc(db, "rooms", roomId));
+  const [roomDetails] = useDocument(
+    (roomId as any) && doc(db, "rooms", roomId)
+  );
 
   return (
     <ChatContainer>
@@ -57,7 +59,7 @@ const ChatComponent = (props: Props) => {
             <ChatBottom />
           </ChatMessages>
           <ChatInput
-            ref={chatRef}
+            innerRef={chatRef}
             channelName={roomDetails?.data()?.name}
             channelId={roomId}
           />
